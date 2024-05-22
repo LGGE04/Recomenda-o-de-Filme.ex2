@@ -1,0 +1,106 @@
+body {
+  background-color: #e3f2fd;
+  color: #343a40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  background-color: #42a5f5;
+  width: 100%;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #1e88e5;
+}
+
+.card {
+  margin-bottom: 20px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  max-height: 300px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.container {
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.form-select,
+.btn-outline-success {
+  margin-left: 10px;
+}
+
+.section-title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #1e88e5;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.row {
+  justify-content: center;
+}
+
+.card-title {
+  color: #3949ab; /* Vibrant color for titles */
+  font-weight: bold;
+}
+
+.card-text {
+  color: #546e7a;
+}
+
+.btn-outline-success {
+  background-color: #26a69a;
+  border-color: #26a69a;
+  color: white;
+}
+
+.btn-outline-success:hover {
+  background-color: #00796b;
+  border-color: #00796b;
+  color: white;
+}
+
+.navbar .form-select,
+.navbar .btn-outline-success {
+  background-color: #bbdefb;
+  color: #1e88e5;
+}
+
+.navbar .form-select:focus,
+.navbar .btn-outline-success:focus {
+  box-shadow: none;
+  border-color: #1e88e5;
+}
+
+.navbar .form-select:focus-visible {
+  outline: none;
+}
+
+.card-body {
+  background-color: #e3f2fd; /* Light blue background for card body */
+}
+
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar .container-fluid {
+  justify-content: center;
+}

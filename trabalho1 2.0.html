@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Filmes</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css trabalho1 2.0.css">
+</head>
+
+<body onload="onload()">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <form class="d-flex" role="select">
+                <select id="titleSelect" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="" selected>Select a list...</option>
+                </select>
+                <button class="btn btn-outline-success ms-2" type="button" onclick="fetchRandomMovie()">Surpreenda-me</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Upcoming Movies</h1>
+        <div id="movies" class="row"></div>
+        <h1>Random Movie</h1>
+        <div id="randomMovie" class="row"></div>
+    </div>
+
+
+    <script>
+        async function onload() {
+            await fetchUpcomingMovies();
+            await titleapi();
+        }
+
+        /**
+         * ! Ao carregar a pagina irá apresentar os filmes que estão por vir pela api upcoming
+         */
+
+        async function fetchUpcomingMovies() {
+            const url = 'https://moviesdatabase.p.rapidapi.com/titles/x/upcoming';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '26a51bb6c1mshe1caed016297946p1d44b2jsn1049fa4167e4',
+                    'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json(); // Assuming the API returns JSON
+                displayMovies(result);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('movies').innerText = 'Failed to fetch movies.';
+            }
+        }
+
+        function displayMovies(movies) {
+            const moviesDiv = document.getElementById('movies');
+            moviesDiv.innerHTML = movies.results
+                .filter(movie => movie.primaryImage) // Filtrar filmes sem imagem
+                .map(movie => `
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="${movie.primaryImage ? movie.primaryImage.url : ''}" class="card-img-top" alt="${movie.titleText.text}">
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.titleText.text}</h5>
+                            <p class="card-text">Release Date: ${movie.releaseDate ? movie.releaseDate.year : 'Unknown'}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        //***************************************************************************************************************************************//
+        /**
+         * ! vai apresentar no select os titulos apresentados na api
+         */
+         async function titleapi() {
+            const url = 'https://moviesdatabase.p.rapidapi.com/titles/utils/lists';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '26a51bb6c1mshe1caed016297946p1d44b2jsn1049fa4167e4',
+                    'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json(); // Assuming the API returns JSON
+                populateTitleSelect(result);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function populateTitleSelect(data) {
+            const titleSelect = document.getElementById('titleSelect');
+            titleSelect.innerHTML = data.results.map(title => `
+                <option value="${title}">${title}</option>
+            `).join('');
+        }
+        //***************************************************************************************************************************************//
+        /**
+         * ! Fetch a random movie from the API and display it
+         */
+         async function fetchRandomMovie() {
+            const titleSelect = document.getElementById('titleSelect');
+            const selectedList = titleSelect.value;
+
+            if (!selectedList) {
+                alert('Por favor, selecione uma lista.');
+                return;
+            }
+
+            const url = `https://moviesdatabase.p.rapidapi.com/titles/random?list=${encodeURIComponent(selectedList)}`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '26a51bb6c1mshe1caed016297946p1d44b2jsn1049fa4167e4',
+                    'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json(); // Assuming the API returns JSON
+                displayRandomMovie(result);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('randomMovie').innerText = 'Failed to fetch random movie.';
+            }
+        }
+
+        function displayRandomMovie(movie) {
+            const moviesDiv = document.getElementById('movies');
+            moviesDiv.innerHTML = ''; // Clear the "Upcoming Movies" section
+
+            const randomMovieDiv = document.getElementById('randomMovie');
+
+            if (!movie.titleText || !movie.titleText.text) {
+                randomMovieDiv.innerHTML = 'Filme não encontrado';
+                return;
+            }
+
+            randomMovieDiv.innerHTML = `
+                <div class="col-md-12">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="${movie.primaryImage ? movie.primaryImage.url : ''}" class="card-img-top" alt="${movie.titleText.text}">
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.titleText.text}</h5>
+                            <p class="card-text">Release Date: ${movie.releaseDate ? movie.releaseDate.year : 'Unknown'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+
+    </script>
+</body>
+
+</html>
