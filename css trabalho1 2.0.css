@@ -1,31 +1,85 @@
 body {
-  background-color: #e3f2fd;
-  color: #343a40;
+  background-color: #1E3A5F;
+  /* Azul Marinho */
+  color: #FFFFFF;
+  /* Branco */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 70px;
+  /* Adiciona espaçamento para o menu fixo */
 }
 
 .navbar {
   margin-bottom: 20px;
-  background-color: #42a5f5;
+  background-color: #000000;
+  /* Preto */
   width: 100%;
+  position: fixed;
+  /* Fixa a posição da barra de navegação */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  /* Garante que a barra de navegação fique acima de outros elementos */
 }
 
 h1 {
   margin-bottom: 20px;
-  color: #1e88e5;
+  color: #FFD700;
+  /* Ouro */
+}
+
+.section-title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #FFD700;
+  /* Ouro */
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .card {
-  margin-bottom: 20px;
+  margin: 10px;
+  /* Add margin between cards */
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 450px;
+  /* Define a fixed height for all cards */
+  background-color: #2c3e50;
+  /* Fundo escuro para os cartazes */
+  border-radius: 10px;
+  /* Adiciona bordas arredondadas */
+  overflow: hidden;
+  /* Garante que o conteúdo não transborde */
+  position: relative;
+  /* Para posicionamento absoluto da sombra */
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(200, 199, 199, 0.08);
+  /* Fundo escuro semi-transparente */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  /* Sombra adicional */
+  z-index: 1;
+  /* Garante que esteja atrás do conteúdo */
+  pointer-events: none;
+  /* Permite interação com o conteúdo */
 }
 
 .card img {
-  max-height: 300px;
+  width: 100%;
+  /* Ensure the image takes the full width of the card */
+  height: 100%;
+  /* Ensure the image takes the full height of the card */
   object-fit: cover;
+  /* Cover the card area without distorting the image */
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -40,50 +94,51 @@ h1 {
   margin-left: 10px;
 }
 
-.section-title {
-  text-align: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  color: #1e88e5;
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.row {
+.exibicao {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .card-title {
-  color: #3949ab; /* Vibrant color for titles */
+  color: #FFD700;
+  /* Ouro */
   font-weight: bold;
 }
 
 .card-text {
-  color: #546e7a;
+  color: #C0C0C0;
+  /* Prata */
 }
 
 .btn-outline-success {
-  background-color: #26a69a;
-  border-color: #26a69a;
+  background-color: #FF0000;
+  /* Vermelho */
+  border-color: #FF0000;
   color: white;
 }
 
 .btn-outline-success:hover {
-  background-color: #00796b;
-  border-color: #00796b;
+  background-color: #C0C0C0;
+  /* Prata */
+  border-color: #C0C0C0;
   color: white;
 }
 
 .navbar .form-select,
 .navbar .btn-outline-success {
-  background-color: #bbdefb;
-  color: #1e88e5;
+  background-color: #FF0000;
+  /* Vermelho */
+  color: #FFFFFF;
+  /* Branco */
 }
 
 .navbar .form-select:focus,
 .navbar .btn-outline-success:focus {
   box-shadow: none;
-  border-color: #1e88e5;
+  border-color: #FFD700;
+  /* Ouro */
 }
 
 .navbar .form-select:focus-visible {
@@ -91,7 +146,10 @@ h1 {
 }
 
 .card-body {
-  background-color: #e3f2fd; /* Light blue background for card body */
+  background-color: #1E3A5F;
+  /* Azul Marinho */
+  overflow: hidden;
+  /* Hide overflow content to ensure uniform card size */
 }
 
 .centered-form {
@@ -103,4 +161,70 @@ h1 {
 
 .navbar .container-fluid {
   justify-content: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .card {
+    height: auto;
+    /* Adjust height for smaller screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    height: 400px;
+    /* Reduce card height for medium screens */
+  }
+
+  .section-title {
+    font-size: 2rem;
+    /* Adjust title size for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    height: 350px;
+    /* Further reduce card height for small screens */
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    /* Adjust title size for small screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 10px 0;
+  }
+
+  .card {
+    height: 300px;
+    /* Further reduce card height for extra small screens */
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    /* Adjust title size for extra small screens */
+  }
+
+  .form-select,
+  .btn-outline-success {
+    margin: 5px 0;
+    /* Adjust spacing for buttons */
+    width: 100%;
+    /* Full width for select and button */
+  }
 }
